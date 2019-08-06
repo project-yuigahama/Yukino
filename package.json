@@ -1,0 +1,26 @@
+{
+  "name": "yukino",
+  "version": "0.1.0",
+  "description": "Yuigahama on TypeScript",
+  "main": "dist/YukinoBot.js",
+  "repository": "https://github.com/project-yuigahama/Yukino.git",
+  "author": "InkoHX <inkohx@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "discord.js": "discordjs/discord.js",
+    "klasa": "dirigeants/klasa#v1.0.0-alpha"
+  },
+  "devDependencies": {
+    "@types/node": "^12.6.9",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "typescript": "^3.5.3"
+  }
+}
