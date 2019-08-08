@@ -7,6 +7,15 @@
   "author": "InkoHX <inkohx@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "node ./dist/Yukino.js",
+    "start:dev": "ts-node ./src/Yukino.ts",
+    "build": "tsc -p .",
+    "build:watch": "tsc -w -p .",
+    "build:test": "tsc -p . --noEmit",
+    "lint": "eslint --ext .ts --ignore-path .gitignore ./src",
+    "lint:fix": "eslint --ext .ts --ignore-path .gitignore ./src --fix"
+  },
   "dependencies": {
     "discord.js": "discordjs/discord.js",
     "fs-nextra": "^0.4.5",
