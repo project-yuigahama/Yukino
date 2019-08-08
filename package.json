@@ -9,9 +9,12 @@
   "private": true,
   "dependencies": {
     "discord.js": "discordjs/discord.js",
+    "fs-nextra": "^0.4.5",
+    "js-yaml": "^3.13.1",
     "klasa": "dirigeants/klasa#v1.0.0-alpha"
   },
   "devDependencies": {
+    "@types/js-yaml": "^3.12.1",
     "@types/node": "^12.6.9",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
@@ -21,6 +24,7 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }
 }
