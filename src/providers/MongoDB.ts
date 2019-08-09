@@ -58,6 +58,11 @@ export default class MongoDB extends Provider {
     else throw new Error()
   }
 
+  public async getKeys (table: string): Promise<string[]> {
+    if (this.db) return this.db.collection(table).find().toArray()
+    else throw new Error()
+  }
+
   public async get (table: string, entryID: string): Promise<any> {
     if (this.db) return this.db.collection(table).findOne({ id: entryID })
     else throw new Error()
