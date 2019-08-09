@@ -4,6 +4,13 @@ import YAML from 'js-yaml'
 
 export interface YukinoConfig {
   token?: string
+  mongodb: {
+    user?: string
+    password?: string
+    host?: string
+    port?: number
+    db?: string
+  }
 }
 
 export default class YukinoClient extends KlasaClient {

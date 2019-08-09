@@ -10,9 +10,9 @@
   "scripts": {
     "start": "node ./dist/Yukino.js",
     "start:dev": "ts-node ./src/Yukino.ts",
-    "build": "tsc -p .",
-    "build:watch": "tsc -w -p .",
-    "build:test": "tsc -p . --noEmit",
+    "compile": "tsc -p .",
+    "compile:watch": "tsc -w -p .",
+    "compile:test": "tsc -p . --noEmit",
     "lint": "eslint --ext .ts --ignore-path .gitignore ./src",
     "lint:fix": "eslint --ext .ts --ignore-path .gitignore ./src --fix"
   },
@@ -20,10 +20,12 @@
     "discord.js": "discordjs/discord.js",
     "fs-nextra": "^0.4.5",
     "js-yaml": "^3.13.1",
-    "klasa": "dirigeants/klasa#v1.0.0-alpha"
+    "klasa": "dirigeants/klasa#v1.0.0-alpha",
+    "mongodb": "^3.3.0-beta2"
   },
   "devDependencies": {
     "@types/js-yaml": "^3.12.1",
+    "@types/mongodb": "^3.1.32",
     "@types/node": "^12.6.9",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
