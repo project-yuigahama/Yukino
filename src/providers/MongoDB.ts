@@ -53,12 +53,12 @@ export default class MongoDB extends Provider {
     else throw new Error()
   }
 
-  public async getAll (table: string) {
+  public async getAll (table: string): Promise<any> {
     if (this.db) return this.db.collection(table).find().toArray()
     else throw new Error()
   }
 
-  public async get (table: string, entryID: string): Promise<Object | null> {
+  public async get (table: string, entryID: string): Promise<any> {
     if (this.db) return this.db.collection(table).findOne({ id: entryID })
     else throw new Error()
   }
@@ -87,7 +87,7 @@ export default class MongoDB extends Provider {
     return output
   }
 
-  private parseEngineInput (updated: any[]) {
+  private parseEngineInput (updated: any[]): any {
     return Object.assign({}, ...updated.map(entry => ({ [entry.data[0]]: entry.data[1] })))
   }
 }
