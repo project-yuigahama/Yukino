@@ -20,7 +20,11 @@ export default class YukinoClient extends KlasaClient {
       typing: true,
       commandLogging: true,
       noPrefixDM: true,
-      disabledCorePieces: ['commands']
+      readyMessage: 'Successfully initialized.',
+      disabledCorePieces: ['commands'],
+      providers: {
+        default: 'MongoDB'
+      }
     })
   }
 

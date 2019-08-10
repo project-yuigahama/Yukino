@@ -4,15 +4,18 @@ import { YukinoConfig } from '../lib/client/YukinoClient'
 import { readFile } from 'fs-nextra'
 import { safeLoad } from 'js-yaml'
 
+const resolveQuery = (query: any) => (util.isObject(query) ? query : { id: query })
+
 export default class MongoDB extends Provider {
   db: Db | null;
 
+  mongoclient: MongoClient | null;
+
   constructor (client: KlasaClient, store: ProviderStore, file: string[], directory: string) {
-    super(client, store, file, directory, {
-      name: 'mongodb'
-    })
+    super(client, store, file, directory)
 
     this.db = null
+    this.mongoclient = null
   }
 
   public async init (): Promise<void> {
@@ -22,10 +25,12 @@ export default class MongoDB extends Provider {
     if (config.mongodb.password && config.mongodb.user) {
       const client = await new MongoClient(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host || 'localhost'}:${config.mongodb.port || '27017'}/${config.mongodb.db || ''}`, { useNewUrlParser: true }).connect()
       this.db = client.db(config.mongodb.db)
+      this.mongoclient = client
     }
 
     const client = await new MongoClient(`mongodb://${config.mongodb.host || 'localhost'}:${config.mongodb.port || '27017'}/${config.mongodb.db || ''}`, { useNewUrlParser: true }).connect()
     this.db = client.db(config.mongodb.db)
+    this.mongoclient = client
   }
 
   public async createTable (table: string): Promise<Collection<any>> {
@@ -34,8 +39,11 @@ export default class MongoDB extends Provider {
   }
 
   public async hasTable (table: string): Promise<boolean> {
-    if (this.db) return this.db.listCollections().toArray().then(collections => collections.some(col => col.name === table))
-    else throw new Error()
+    if (this.db) {
+      return this.db.listCollections().toArray().then((collections: any[]) => {
+        return collections.some(col => col.name === table)
+      })
+    } else throw new Error()
   }
 
   public async deleteTable (table: string): Promise<boolean> {
@@ -44,12 +52,12 @@ export default class MongoDB extends Provider {
   }
 
   public async create (table: string, entryID: string, data: any = {}): Promise<any> {
-    if (this.db) return this.db.collection(table).insertOne(util.mergeObjects(this.parseUpdateInput(data), { id: entryID }))
+    if (this.db) return this.db.collection(table).insertOne(util.mergeObjects(this.parseUpdateInput(data), resolveQuery(entryID)))
     else throw new Error()
   }
 
   public async update (table: string, entryID: string, data: any): Promise<any> {
-    if (this.db) return this.db.collection(table).updateOne({ id: entryID }, { $set: util.isObject(data) ? this.flatten(data) : this.parseEngineInput(data) })
+    if (this.db) return this.db.collection(table).updateOne(resolveQuery(entryID), { $set: util.isObject(data) ? this.flatten(data) : this.parseEngineInput(data) })
     else throw new Error()
   }
 
@@ -64,12 +72,12 @@ export default class MongoDB extends Provider {
   }
 
   public async get (table: string, entryID: string): Promise<any> {
-    if (this.db) return this.db.collection(table).findOne({ id: entryID })
+    if (this.db) return this.db.collection(table).findOne(resolveQuery(entryID))
     else throw new Error()
   }
 
   public async replace (table: string, entryID: string, data: any): Promise<any> {
-    if (this.db) return this.db.collection(table).replaceOne({ id: entryID }, this.parseUpdateInput(data))
+    if (this.db) return this.db.collection(table).replaceOne(resolveQuery(entryID), this.parseUpdateInput(data))
     else throw new Error()
   }
 
@@ -79,15 +87,20 @@ export default class MongoDB extends Provider {
   }
 
   public async delete (table: string, entryID: string): Promise<any> {
-    if (this.db) return this.db.collection(table).deleteOne({ id: entryID })
+    if (this.db) return this.db.collection(table).deleteOne(resolveQuery(entryID))
     else throw new Error()
   }
 
+  public async shutdown (): Promise<void> {
+    if (this.mongoclient) this.mongoclient.close()
+  }
+
   private flatten (obj: any, path: string = ''): any {
-    let output: any = []
+    let output = {} as { [key: string]: any }
     for (const [key, value] of Object.entries(obj)) {
-      if (util.isObject(value)) output = Object.assign(output, this.flatten(value, path ? `${path}.${key}` : key))
-      else output[path ? `${path}.${key}` : key] = value
+      if (util.isObject(value)) {
+        output = Object.assign(output, this.flatten(value, path ? `${path}.${key}` : key))
+      } else output[path ? `${path}.${key}` : key] = value
     }
     return output
   }
