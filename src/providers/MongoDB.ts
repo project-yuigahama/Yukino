@@ -26,11 +26,17 @@ export default class MongoDB extends Provider {
       const client = await new MongoClient(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host || 'localhost'}:${config.mongodb.port || '27017'}/${config.mongodb.db || ''}`, { useNewUrlParser: true }).connect()
       this.db = client.db(config.mongodb.db)
       this.mongoclient = client
+
+      this.client.console.log('[MongoDB] Connect to database.')
+
+      return
     }
 
     const client = await new MongoClient(`mongodb://${config.mongodb.host || 'localhost'}:${config.mongodb.port || '27017'}/${config.mongodb.db || ''}`, { useNewUrlParser: true }).connect()
     this.db = client.db(config.mongodb.db)
     this.mongoclient = client
+
+    this.client.console.log('[MongoDB] Connect to database.')
   }
 
   public async createTable (table: string): Promise<Collection<any>> {
@@ -102,6 +108,7 @@ export default class MongoDB extends Provider {
         output = Object.assign(output, this.flatten(value, path ? `${path}.${key}` : key))
       } else output[path ? `${path}.${key}` : key] = value
     }
+
     return output
   }
 
