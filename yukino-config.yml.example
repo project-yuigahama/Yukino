@@ -1,1 +1,10 @@
-token: ""
+# Bot token
+token: "MTk4NjIyNDgzNDcxOTI1MjQ4.Cl2FMQ.ZnCjm1XVW7vRze4b7Cq4se7kKWs" # Please replace
+
+# MongoDB
+mongodb:
+  user: "" # User Name (optional)
+  password: "" # User Password (optional)
+  host: "localhost" # IP
+  port: 27017 # Port number
+  db: "" # DB NAME
