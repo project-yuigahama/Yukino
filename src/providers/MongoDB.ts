@@ -1,8 +1,6 @@
 import { MongoClient, Db, Collection } from 'mongodb'
 import { Provider, KlasaClient, ProviderStore, util } from 'klasa'
-import { YukinoConfig } from '../lib/client/YukinoClient'
-import { readFile } from 'fs-nextra'
-import { safeLoad } from 'js-yaml'
+import YukinoUtils from '../lib/client/utils/Utils'
 
 const resolveQuery = (query: any) => (util.isObject(query) ? query : { id: query })
 
@@ -19,7 +17,7 @@ export default class MongoDB extends Provider {
   }
 
   public async init (): Promise<void> {
-    const config: YukinoConfig | undefined = safeLoad(await readFile('./yukino-config.yml', 'utf8'))
+    const config = await YukinoUtils.getYukinoConfig()
     if (!config) throw new Error('"yukino-config.yml" is not found.')
 
     if (config.mongodb.password && config.mongodb.user) {

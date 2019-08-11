@@ -1,17 +1,5 @@
 import { KlasaClient } from 'klasa'
-import { readFile } from 'fs-nextra'
-import YAML from 'js-yaml'
-
-export interface YukinoConfig {
-  token?: string
-  mongodb: {
-    user?: string
-    password?: string
-    host?: string
-    port?: number
-    db?: string
-  }
-}
+import Utils from './utils/Utils'
 
 export default class YukinoClient extends KlasaClient {
   constructor () {
@@ -29,7 +17,7 @@ export default class YukinoClient extends KlasaClient {
   }
 
   public async login (): Promise<string> {
-    const config: YukinoConfig | undefined = YAML.safeLoad(await readFile('./yukino-config.yml', 'utf8'))
+    const config = await Utils.getYukinoConfig()
     if (config && config.token) return super.login(config.token)
     else return super.login()
   }
