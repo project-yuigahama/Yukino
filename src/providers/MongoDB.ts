@@ -1,20 +1,13 @@
 import { MongoClient, Db, Collection } from 'mongodb'
-import { Provider, KlasaClient, ProviderStore, util } from 'klasa'
+import { Provider, util } from 'klasa'
 import YukinoUtils from '../lib/client/utils/Utils'
 
 const resolveQuery = (query: any) => (util.isObject(query) ? query : { id: query })
 
 export default class MongoDB extends Provider {
-  db: Db | null;
+  db: Db | null = null;
 
-  mongoclient: MongoClient | null;
-
-  constructor (client: KlasaClient, store: ProviderStore, file: string[], directory: string) {
-    super(client, store, file, directory)
-
-    this.db = null
-    this.mongoclient = null
-  }
+  mongoclient: MongoClient | null = null;
 
   public async init (): Promise<void> {
     const config = await YukinoUtils.getYukinoConfig()
