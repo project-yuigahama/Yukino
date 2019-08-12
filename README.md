@@ -1,2 +1,3 @@
 # Yukino
-Yuigahama by TypeScript
+
+> Multi-function bot.
