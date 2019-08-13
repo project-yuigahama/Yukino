@@ -5,6 +5,8 @@ import YukinoUtils from '../lib/client/utils/Utils'
 const resolveQuery = (query: any) => (util.isObject(query) ? query : { id: query })
 
 export default class MongoDB extends Provider {
+  name = 'mongodb'
+
   db: Db | null = null;
 
   mongoclient: MongoClient | null = null;
