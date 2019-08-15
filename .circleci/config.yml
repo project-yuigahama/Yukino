@@ -42,7 +42,6 @@ workflows:
   nodejs_tests:
     jobs:
       - init
-          name: init
       - test:
           requires:
             - build
