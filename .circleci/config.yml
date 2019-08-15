@@ -44,4 +44,4 @@ workflows:
       - init
       - test:
           requires:
-            - build
+            - init
