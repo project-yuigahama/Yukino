@@ -1,9 +1,9 @@
 version: 2.1
 jobs:
   build:
+    working_directory: ~/workspace/Yukino
     docker:
       - image: circleci/node:10.16.0
-    working_directory: ~/workspace/Yukino
     steps:
       - checkout
       - restore_cache:
@@ -22,11 +22,11 @@ jobs:
           - .
   test:
     working_directory: ~/workspace/Yukino
-    - attach_workspace:
-      at: ~/workspace/Yukino
     docker:
       - image: circleci/node:10.16.0
     steps:
+      - attach_workspace:
+        at: ~/workspace/Yukino
       - run:
         name: Linting
         command: yarn run lint
