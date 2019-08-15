@@ -1,9 +1,14 @@
 version: 2.1
-jobs:
-  build:
+
+executors:
+  main:
     working_directory: ~/workspace/Yukino
     docker:
-      - image: circleci/node:10.16.0
+      - circleci/node:10.16.0
+
+jobs:
+  init:
+    executor: main
     steps:
       - checkout
       - restore_cache:
@@ -21,9 +26,7 @@ jobs:
           paths:
             - .
   test:
-    working_directory: ~/workspace/Yukino
-    docker:
-      - image: circleci/node:10.16.0
+    executor: main
     steps:
       - attach_workspace:
           at: ~/workspace/Yukino
@@ -38,7 +41,8 @@ workflows:
   version: 2
   nodejs_tests:
     jobs:
-      - build
+      - init
+          name: init
       - test:
           requires:
             - build
