@@ -3,16 +3,42 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.16.0
-    working_directory: ~/repo
+    working_directory: ~/workspace/Yukino
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn install
+        keys:
+          - yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+        name: Install dependencies
+        command: yarn install
       - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn run lint
-      - run: yarn run compile:test
+        key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/workspace/Yukino/node_modules
+      - persist_to_workspace:
+        root: .
+        paths:
+          - .
+  test:
+    working_directory: ~/workspace/Yukino
+    - attach_workspace:
+      at: ~/workspace/Yukino
+    docker:
+      - image: circleci/node:10.16.0
+    steps:
+      - run:
+        name: Linting
+        command: yarn run lint
+      - run:
+        name: Compile
+        command: yarn run compile:test
+
+workflows:
+  version: 2
+  nodejs_tests:
+    jobs:
+      - build
+      - test:
+        requires:
+          - build
