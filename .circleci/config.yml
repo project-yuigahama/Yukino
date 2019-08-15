@@ -4,7 +4,7 @@ executors:
   main:
     working_directory: ~/workspace/Yukino
     docker:
-      - circleci/node:10.16.0
+      - image: circleci/node:10.16.0
 
 jobs:
   init:
