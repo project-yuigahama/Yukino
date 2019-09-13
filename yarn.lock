@@ -18,6 +18,11 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@discordjs/collection@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.1.tgz#372b126186c3bdf77f32bb284a72d7a75b394323"
+  integrity sha512-T5AGaxlR2vszMM/a0cKoHFjSCNwE/sON4fW0ZGuLRwbJVdkezsSzy/TYU/IOQqOLTyzEeIh0EjGikrwH5+dUHA==
+
 "@types/bson@*":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/bson/-/bson-4.0.0.tgz#9073772679d749116eb1dfca56f8eaac6d59cc7a"
@@ -314,9 +319,10 @@ diff@^4.0.1:
 
 discord.js@discordjs/discord.js:
   version "12.0.0-dev"
-  uid "37ecf7b826db002875ff578e31bc9ac001b14882"
-  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/37ecf7b826db002875ff578e31bc9ac001b14882"
+  uid ea9e1441905e67e2627a6f5e80a8d989d01376c5
+  resolved "https://codeload.github.com/discordjs/discord.js/tar.gz/ea9e1441905e67e2627a6f5e80a8d989d01376c5"
   dependencies:
+    "@discordjs/collection" "^0.1.1"
     abort-controller "^3.0.0"
     form-data "^2.3.3"
     node-fetch "^2.3.0"
