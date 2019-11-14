@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "discord.js": "discordjs/discord.js",
-    "fs-nextra": "^0.4.5",
+    "fs-nextra": "^0.4.7",
     "js-yaml": "^3.13.1",
     "klasa": "dirigeants/klasa#v1.0.0-alpha",
     "mongodb": "^3.3.3",
